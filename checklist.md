@@ -34,19 +34,19 @@
 
 ## Websites and Apps
 
-### Marketing
+**Marketing**
 - [ ] The marketing department needs a simple static website that can be accessed quickly from anywhere in the world - **S3 with replication**
 
 - [ ] Wordpress in a Docker container for the marketing staff to use
 
 - [ ] Enable WAF for the Wordpress application and configure it to block all traffic containing possible XSS and SQLi attempts
 
-### Developers
+**Developers**
 - [ ] The developers will need a MySQL database installed on a small EC2
 
 - [ ] Dokuwiki in a Docker container for the developers to use
 
-### Finance / Legal
+**Finance / Legal**
 - [ ] The legal department needs a Wordpress installation to manage corporate intranet assets
 
 ## Servers - EC2
