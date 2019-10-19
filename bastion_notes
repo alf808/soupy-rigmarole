@@ -1,0 +1,39 @@
+https://www.youtube.com/watch?v=B5qx2QQ3UaY&feature=em-share_video_user
+at 55 minutes
+
+
+all subnets in same NACL
+
+have a public sg for the bastion
+
+
+create a private sg for the private instance
+
+add an inbound SSH with source of public sg
+description: ssh only on internal network
+
+after getting into private SSH, turn off public SSH
+
+to get the private out to the internet we need to add
+the nat gateway in private route table
+note: make sure nat gateway is in public subnet
+
+edit private rtb to delete reference
+
+when private instance is patched turn off delete nat gateway
+release EIP
+
+config file in .ssh
+
+Host team1-acme-dev-public
+   Hostname 54.186.204.119
+   User ec2-user
+   Port 22
+   ForwardAgent yes
+   IdentityFile ~/.ssh/team1-acme-dev-key.pem
+
+Host team1-acme-dev-private
+   User ec2-user
+   ProxyCommand ssh team1-acme-dev-public nc 10.4.2.162 22
+   ForwardAgent yes
+   IdentityFile ~/.ssh/team1-acme-dev-key.pem

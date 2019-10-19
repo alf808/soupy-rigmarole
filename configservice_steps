@@ -1,0 +1,11 @@
+aws configservice deliver-config-snapshot --delivery-channel-name default
+
+
+arn:aws:iam::427723548567:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig
+
+aws configservice subscribe --s3-bucket config-bucket-427723548567 --sns-topic arn:aws:sns:us-west-2:427723548567:config-topic --iam-role arn:aws:iam::427723548567:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig
+
+
+aws configservice deliver-config-snapshot --delivery-channel-name default
+
+aws configservice get-status

@@ -1,0 +1,20 @@
+mysql installation and configuration
+
+sudo yum install mariadb-server.x86_64
+
+sudo systemctl start mariadb.service
+
+sudo systemctl enable mariadb.service
+
+mysql:
+
+create user 'privateuser' identified by 'password';
+grant usage on *.* to 'privateuser'@'localhost' identified by 'password';
+grant usage on *.* to 'privateuser'@'%' identified by 'password';
+grant all privileges on *.* to 'privateuser'@'localhost';
+grant all privileges on *.* to 'privateuser'@'%';
+flush privileges;
+
+command line:
+mysql -u privateuser -h xx.xx.xx.xx -p
+
