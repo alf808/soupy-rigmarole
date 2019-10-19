@@ -51,11 +51,11 @@
 
 ## Servers - EC2
 - [ ] Servers should be accessible via bastion over SSH but not publicly accessible via SSH w/ the exception of bastion(s)
-### SSM
+** SSM
 - [ ] Servers should be able to be patched any time with Systems Manager
-### Config
+** Config
 - [ ] Servers should store their standard configuration in Config
-### User Data
+** User Data
 - [ ] All servers should use a User Data script upon startup to install and configure an agent to send custom CloudWatch events for CPU monitoring
 
 - [ ] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch
@@ -75,7 +75,7 @@
 - [ ] All applications should have a valid logging solution
 
 ## Monitoring
-### Cloudwatch, SNS, Lambda
+**Cloudwatch, SNS, Lambda**
 - [ ] Operations should get alerts whenever an EC2 changes goes into a stopped state and when the EC2 is remediated
 
 - [ ] Operations should get alerts whenever and EC2 is terminated
@@ -83,9 +83,11 @@
 - [ ] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated
 
 - [ ] Create a dashboard in each account to monitor key system metrics and network traffic
-### GuardDuty
+
+**GuardDuty**
 - [ ] Enable [GuardDuty](https://aws.amazon.com/guardduty/) to monitor baseline activity and anomalies across the system
-### Inspector
+
+**Inspector**
 - [ ] Enable [Inspector](https://aws.amazon.com/inspector/) and configure to run nightly scans of all of your applications and networks
 
 ## SNS
