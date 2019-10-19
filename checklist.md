@@ -51,11 +51,14 @@
 
 ## Servers - EC2
 - [ ] Servers should be accessible via bastion over SSH but not publicly accessible via SSH w/ the exception of bastion(s)
-** SSM
+
+**SSM**
 - [ ] Servers should be able to be patched any time with Systems Manager
-** Config
+
+**Config**
 - [ ] Servers should store their standard configuration in Config
-** User Data
+
+**User Data**
 - [ ] All servers should use a User Data script upon startup to install and configure an agent to send custom CloudWatch events for CPU monitoring
 
 - [ ] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch
