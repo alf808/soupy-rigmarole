@@ -147,8 +147,9 @@ sudo systemctl enable awslogsd.service
     ```
     arn:aws:s3:::team1-acme-dev-cloudtrail/AWSLogs/427723548567/*
     ```
-    * guardduty
-    * inspector
+    * GuardDuty - 30-day free trial
+    * Inspector - 30-day free trial
+
   * Server patching with Systems Manager (SSM)
     * created a role with policy **AmazonSSMManagedInstanceCore** and attached to EC2 instances to be patched and then set up patch manager in Systems Manager
 
@@ -180,13 +181,29 @@ sudo systemctl enable awslogsd.service
 ![rules](cloud_alerts.png)
     * email alerts
 ![emails](cloud_tamper_email.png)
-  
+
+Developers need a secure location to store file uploads from various applications, these files should support versioning
+
+![dev bucket](dev_bucket_versioning.png)
+
+with replication rule to create redundancy
+
+![replication](s3_replication_rule.png)
+
+### monitoring the root  
+Send an alert whenever someone logs in with the root user account for any organization
+
+![cloudwatch alert root activity](cloudwatch_root_alarm.png)
+
+SNS notification
+![email notification](notification_root_activity.png)
+
 ## Documents - (S3 with Replication)
 
-  * [0] Documents should be ensured to be stored in multiple regions for reliable backups and guaranteed accessibility
+  * [x] Documents should be ensured to be stored in multiple regions for reliable backups and guaranteed accessibility
   * Legal needs a secure location to store legal documents that are not accessible by the public or any other users outside of their group
   * Marketing needs a secure location to store creative and digital assets
-  * [0] Developers need a secure location to store file uploads from various applications, these files should support versioning 
+  * [x] Developers need a secure location to store file uploads from various applications, these files should support versioning 
   * Ensure that files are stored securely
 
 ## Websites - Jen and Jo
@@ -248,4 +265,4 @@ sudo systemctl enable awslogsd.service
 
   * [x] Send an alert whenever Cloudtrail controls are tampered with
   * [x] Send an alert whenever CloudWatch controls are tampered with
-  * [0] Send an alert whenever someone logs in with the root user account for any organization
+  * [x] Send an alert whenever someone logs in with the root user account for any organization
