@@ -149,6 +149,8 @@ sudo systemctl enable awslogsd.service
     ```
     * GuardDuty - 30-day free trial
     * Inspector - 30-day free trial
+    * S3 with replication
+    * Config 
 
   * Server patching with Systems Manager (SSM)
     * created a role with policy **AmazonSSMManagedInstanceCore** and attached to EC2 instances to be patched and then set up patch manager in Systems Manager
@@ -254,9 +256,39 @@ SNS notification
 
 ## Monitoring - Lambda and Cloudwatch, low priority
 
-  * [0] Operations should get alerts whenever an EC2 changes goes into a stopped state and when the EC2 is remediated - L & C
-  * [0] Operations should get alerts whenever and EC2 is terminated - L & C
-  * [0] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated - L & C
+  * [x] Operations should get alerts whenever an EC2 changes goes into a stopped state and when the EC2 is remediated - L & C
+
+![start EC2](startec2_lambda.png)
+
+**Start EC2 code**
+```
+import json
+import boto3
+
+ec2 = boto3.resource('ec2')
+
+def lambda_handler(event, context):
+    id = event["detail"]["instance-id"] #get instance id from event
+    
+    instance = ec2.Instance(id)
+    instance.start()
+
+    return {
+        'statusCode': 200,
+        'body': 'Instance ID:' + json.dumps(instance.instance_id + ' started')
+    }
+```
+
+**Cloudwatch rule**
+![EC2 stop rule](cloudwatch_ec2_stop_rule.png)
+
+  * [x] Operations should get alerts whenever and EC2 is terminated - L & C
+
+![EC2 terminated rule](cloudwatch_ec2_terminate_rule.png)
+
+  * [0] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated
+
+
   * [x] Create a dashboard in each account to monitor key system metrics and network traffic - Cloudwatch
   * [x] Enable [GuardDuty](https://aws.amazon.com/guardduty/) to monitor baseline activity and anomolies across the system
   * [x] Enable [Inspector](https://aws.amazon.com/inspector/) and configure to run nightly scans of all of your applications and networks
