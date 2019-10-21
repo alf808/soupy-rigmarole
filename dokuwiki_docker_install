@@ -6,8 +6,9 @@ sudo docker run -d -p 80:80 --name mywikipad mprasil/dokuwiki
 elinks http://localhost/install.php
 account: nemo, pwd:
 
-
-sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awslogs-region=us-west-2 --log-opt awslogs-group=myNewDockerLogGroup --log-opt awslogs-create-group=true mprasil/dokuwiki:latest
+sudo service awslogs start
+sudo service docker start
+sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awslogs-region=us-west-2 --log-opt awslogs-group=myNewDockerLogGroup --log-opt awslogs-create-group=true --name mywikipad mprasil/dokuwiki:latest
 
 python3 -m http.server
 exit

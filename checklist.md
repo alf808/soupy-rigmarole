@@ -21,7 +21,7 @@
 - [x] Prevent users within the Development environment from disabling Config or changing any of it's rules - **only SysOps have config access**
 
 ## IAM
-- [x] All organizations should have best practices applied for password security and console access policies - **only group SysOps have access to config**
+- [x] All organizations should have best practices applied for password security and console access policies - **Auditors do not have programmatic access**
 
 - [x] Appropriate groups should be created with multiple users created for various groups
 

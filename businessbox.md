@@ -12,24 +12,28 @@ Requirements for deliverables from this project include:
 
 [] **NOTE:** All setups should be verified to be working properly to be considered complete.
 
-[] **NOTE:** If you are going to use any services that incur a cost you must report what that service will cost daily/monthly. **James**
+[] **NOTE:** If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
 
+  * COSTS
+    * EIP for nat (4 hours 19 cents)
+    * S3 for cloudtrail
+    * GuardDuty - 30-day free trial
+    * Inspector - 30-day free trial
+    * S3 with replication
+    * Config 
 
 ## Organizations - (OU)
 The company will need to manage multiple organizations units to separate divisions within the business.
 
   * Ensure that all organizations cannot disable CloudTrail logging in any organization via Service Control Policy
-  * Production
+
   * Development
     * [x] The development environment should only have access to development related resources
     * [x] Prevent users within the Development environment from disabling Config or changing any of it's rules - **only SysOps have config access (alf)**
-  * Legal
-  * Research & Development
-    * The research environment should never allow servers to be accessible from the public internet via Internet Gateway, connecting to a NAT Gateway temporarily to patch systems or download software is acceptable
 
 ## Users/Groups/Roles - (IAM)
 
-* [x] All organizations should have best practices applied for password security and console access policies - **only group SysOps have access to config (alf)**
+* [x] All organizations should have best practices applied for password security and console access policies - **Auditors do not have programmatic access**
 * [x] Appropriate groups should be created with multiple users created for various groups
 
 ## Networks - (VPC)
@@ -80,6 +84,14 @@ Host team1-acme-dev-private
 
   * bastion worked
 ![bastion worked](bastion_worked.png)
+
+Developers need a secure location to store file uploads from various applications, these files should support versioning. Block public access
+
+![dev bucket](dev_bucket_versioning.png)
+
+with replication rule to create redundancy
+
+![replication](s3_replication_rule.png)
 
   * private subnet -- dokuwiki docker and mysql, EC2 required for updates
   SSH inbound, mysql inbound
@@ -132,23 +144,24 @@ sudo systemctl enable awslogsd.service
 
 ![docker cloudwatch](docker_cloudwatch.png)
 
-  * private S3 with replication
+### Legal wordpress
 
-    * **TODO**
+  * RDS MySql for Wordpress Legal
+![wordpress RDS](wp_rds_mysql_legal.png)
+
+  * Wordpress Legal
+![wordpress for legal](wp_private_legal.png)
+
+  * signature groups
+![rds sg](rds_legal_sg.png)
+![ec2 sg](ec2_legal_sg.png)
+
+
+
 
   * S3 bucket for cloudtrail (with lifecycle) - give S3 ARN to James
     * lifecycle rule
     ![lifecycle cloudtrail](lifecycle_cloudtrail.png)
-  * COSTS
-    * EIP for nat (4 hours 19 cents)
-    * S3 for cloudtrail:
-    ```
-    arn:aws:s3:::team1-acme-dev-cloudtrail/AWSLogs/427723548567/*
-    ```
-    * GuardDuty - 30-day free trial
-    * Inspector - 30-day free trial
-    * S3 with replication
-    * Config 
 
   * Server patching with Systems Manager (SSM)
     * created a role with policy **AmazonSSMManagedInstanceCore** and attached to EC2 instances to be patched and then set up patch manager in Systems Manager
@@ -162,8 +175,6 @@ sudo systemctl enable awslogsd.service
     * patch history
 ![patch history](patch_history.png)
 
-  * dashboard to monitor key system metrics and network traffic
-![dashboard cloudwatch](dashboard_keymetrics.png)
 
   * standard configuration in Config
     * public
@@ -171,74 +182,14 @@ sudo systemctl enable awslogsd.service
     * private
 ![private ec2](config_snapshot_1_38.png)
 
-  * Inspector
-![inspector](inspector_enabled.png)
-
-  * GuardDuty
-![guardduty enabled](guardduty_enabled.png)
-  * Alerts - SNS
-    * Rules
-![rules](cloud_alerts.png)
-    * email alerts
-![emails](cloud_tamper_email.png)
-
-Developers need a secure location to store file uploads from various applications, these files should support versioning
-
-![dev bucket](dev_bucket_versioning.png)
-
-with replication rule to create redundancy
-
-![replication](s3_replication_rule.png)
-
-### monitoring the root  
-Send an alert whenever someone logs in with the root user account for any organization
-
-![cloudwatch alert root activity](cloudwatch_root_alarm.png)
-
-SNS notification
-![email notification](notification_root_activity.png)
-
-## Documents - (S3 with Replication)
-
-  * [x] Documents should be ensured to be stored in multiple regions for reliable backups and guaranteed accessibility
-  * Legal needs a secure location to store legal documents that are not accessible by the public or any other users outside of their group
-  * Marketing needs a secure location to store creative and digital assets
-  * [x] Developers need a secure location to store file uploads from various applications, these files should support versioning 
-  * Ensure that files are stored securely
-
-## Websites - Jen and Jo
-
-  * The marketing department needs a simple static website that can be accessed quickly from anywhere in the world - **S3 -- one public for website and one private for internal assets**
-  * The legal department needs a Wordpress installation to manage corporate intranet assets - **EC2 or Docker**
-
-    * RDS MySql for Wordpress Legal
-![wordpress RDS](wp_rds_mysql_legal.png)
-
-    * Wordpress Legal
-![wordpress for legal](wp_private_legal.png)
-
-    * signature groups
-![rds sg](rds_legal_sg.png)
-![ec2 sg](ec2_legal_sg.png)
 
 
-## Servers - Alf (EC2)
-
-  * [x] Servers should be accessible via bastion over SSH but not publicly accessible via SSH w/ the exception of bastion(s)
-
-    * [bastion lecture 1](https://youtu.be/B5qx2QQ3UaY?t=3113)
-    * [bastion lecture 2](https://youtu.be/QURN-nJJZj4?t=2756)
-  * [x] Servers should be able to be patched any time with Systems Manager
-  * [x] Servers should store their standard configuration in Config
-
-  https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-commandline-fleet.html
-
-  * [x] All servers should use a User Data script upon startup to install and configure an agent to send custom CloudWatch events for CPU monitoring
 
     * https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/US_AlarmAtThresholdEC2.html
 
     * configure cloud watch agent: make sure that there's an IAM role attached to EC2 that will allow cloudwatch, ex: CloudWatchAgentServerRole
     * do the following in EC2 instance command line:
+
 ```
 wget https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
@@ -251,7 +202,8 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-c
 ![cpu util graph](cpu_utilization_graph.png)
 
 
-  * [x] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch. 
+  * [x] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-commandline-fleet.html
+
     * Make sure that awslogs and docker services are installed
     * [user data](https://docs.docker.com/config/containers/logging/awslogs/):
 ```
@@ -280,29 +232,6 @@ sudo service docker start
 sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awslogs-region=us-west-2 --log-opt awslogs-group=myNewDockerLogGroup --log-opt awslogs-create-group=true --name mywikipad mprasil/dokuwiki:latest
 --//
 ```
-## Applications - Jen and Alf
-
-  * [x] Dokuwiki in a Docker container for the developers to use - **Alf**
-  * Wordpress in a Docker container for the marketing staff to use - **Jen**
-  * [x] The developers will need a MySQL database installed on a small EC2 - **Alf**
-  * Enable WAF for the Wordpress application and configure it to block all traffic containing possible XSS and SQLi attempts - **Jen**
-
-## Databases - depends on which database
-
-  * [x] Databases should be on private subnets and never be available from the internet
-  * Wordpress should use a small RDS with proper security controls
-
-## Logs
-
-  * Ensure that all logs are tamper proof from all organizations to ensure non-repudiation by sending all Cloudtrail logs to a single organization ([centralized Cloudtrail documentation](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-receive-logs-from-multiple-accounts.html)) - **James**
-
-  * [x] Ensure that logs are readily accessible for a period of 30 days and create an archival strategy/implementation that logs are stored by the organization for 90 days and then deleted (cloudtrail in each division with S3 Lifecycle set up) - **All admins**
-  [lifecycle lecture](https://youtu.be/mVdgMx_vgv8?t=3860)
-  * [x] Auditors should have read-only access for all logs across the organization - **James and Admins**
-
-  * [x] All applications should have a valid logging solution - **Jen, Jo, Alf**
-
-    [flow logs lecture](https://youtu.be/B5qx2QQ3UaY?t=5461)
 
 ## Monitoring - Lambda and Cloudwatch, low priority
 
@@ -338,13 +267,28 @@ def lambda_handler(event, context):
 
   * [0] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated
 
+  * dashboard to monitor key system metrics and network traffic
+![dashboard cloudwatch](dashboard_keymetrics.png)
 
-  * [x] Create a dashboard in each account to monitor key system metrics and network traffic - Cloudwatch
-  * [x] Enable [GuardDuty](https://aws.amazon.com/guardduty/) to monitor baseline activity and anomolies across the system
-  * [x] Enable [Inspector](https://aws.amazon.com/inspector/) and configure to run nightly scans of all of your applications and networks
 
-## Alerts - SNS, group, low priority
+  * Inspector
+![inspector](inspector_enabled.png)
 
-  * [x] Send an alert whenever Cloudtrail controls are tampered with
-  * [x] Send an alert whenever CloudWatch controls are tampered with
-  * [x] Send an alert whenever someone logs in with the root user account for any organization
+  * GuardDuty
+![guardduty enabled](guardduty_enabled.png)
+
+
+
+  * Alerts - SNS
+    * Rules
+![rules](cloud_alerts.png)
+    * email alerts
+![emails](cloud_tamper_email.png)
+
+### monitoring the root  
+Send an alert whenever someone logs in with the root user account for any organization
+
+![cloudwatch alert root activity](cloudwatch_root_alarm.png)
+
+SNS notification
+![email notification](notification_root_activity.png)
