@@ -58,9 +58,11 @@ MFA to be done soon
 Only SysOps, NetworkAdmins, and DBAdmins have programmatic access. Auditors only have console access
 ![groups](iam_groups.png)
 
-
   * public subnet -- http(s) outbound, SSH inbound with EC2 for bastion host with internet gateway and temporarily a NAT gateway
-  
+
+  * private subnet -- dokuwiki docker and mysql, EC2 required for updates
+  SSH inbound, mysql inbound
+
   * CONFIG file in host machine for bastion host setup
 ```
 Host team1-acme-dev-public
@@ -93,8 +95,6 @@ with replication rule to create redundancy
 
 ![replication](s3_replication_rule.png)
 
-  * private subnet -- dokuwiki docker and mysql, EC2 required for updates
-  SSH inbound, mysql inbound
 
   * dokuwiki for developer internal use
 
