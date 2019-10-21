@@ -1,0 +1,32 @@
+
+
+https://aws.amazon.com/getting-started/projects/deploy-wordpress-with-amazon-rds/
+
+Create RDS MySQL and EC2 in the same VPC
+
+security group for RDS only accessible from the EC2 instance's security group on port 3306
+
+SSH inbound to EC2 instance only from single IP with internal network access on port 80
+
+sudo yum update -y
+sudo yum install -y mysql
+export MYSQL_HOST=wordpress.secret.us-west-2.rds.amazonaws.com
+mysql --user=admin --password=secret wordpress
+sudo yum install -y httpd
+sudo service httpd start
+wget https://wordpress.org/latest.tar.gz
+tar -xzf latest.tar.gz
+ls
+cd wordpress/
+cp wp-config-sample.php wp-config.php
+nano wp-config.php
+sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+cd /home/ec2-user
+sudo cp -r wordpress/* /var/www/html/
+sudo service httpd restart
+sudo yum install elinks
+elinks http://10.1.37.32
+
+alfalfa@team1legal.acmecorp.wow
+lQs($Z!sAY4k6u(*ME
+

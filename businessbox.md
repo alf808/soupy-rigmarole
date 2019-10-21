@@ -1,7 +1,5 @@
 # Team 1, Acme Corp.
 
-You must architect, design and create the Enterprise infrastructure for Acme Corp. The provided requirements are high level needs as identified by various stakeholders but should not be considered complete in detail. 
-
 It is assumed that the Systems Operations Control team will analyze all requirements and create the appropriate configurations and document the outcome of their analysis and deployment.
 
 Requirements for deliverables from this project include:
@@ -17,7 +15,7 @@ Requirements for deliverables from this project include:
 [] **NOTE:** If you are going to use any services that incur a cost you must report what that service will cost daily/monthly. **James**
 
 
-## Organizations - James (OU)
+## Organizations - (OU)
 The company will need to manage multiple organizations units to separate divisions within the business.
 
   * Ensure that all organizations cannot disable CloudTrail logging in any organization via Service Control Policy
@@ -213,6 +211,17 @@ SNS notification
   * The marketing department needs a simple static website that can be accessed quickly from anywhere in the world - **S3 -- one public for website and one private for internal assets**
   * The legal department needs a Wordpress installation to manage corporate intranet assets - **EC2 or Docker**
 
+    * RDS MySql for Wordpress Legal
+![wordpress RDS](wp_rds_mysql_legal.png)
+
+    * Wordpress Legal
+![wordpress for legal](wp_private_legal.png)
+
+    * signature groups
+![rds sg](rds_legal_sg.png)
+![ec2 sg](ec2_legal_sg.png)
+
+
 ## Servers - Alf (EC2)
 
   * [x] Servers should be accessible via bastion over SSH but not publicly accessible via SSH w/ the exception of bastion(s)
@@ -221,15 +230,56 @@ SNS notification
     * [bastion lecture 2](https://youtu.be/QURN-nJJZj4?t=2756)
   * [x] Servers should be able to be patched any time with Systems Manager
   * [x] Servers should store their standard configuration in Config
-  * [0] All servers should use a User Data script upon startup to install and configure an agent to send custom CloudWatch events for CPU monitoring
 
-      * [cloud-init](https://aws.amazon.com/premiumsupport/knowledge-center/execute-user-data-ec2/)
-      * [cloud watch user data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/QuickStartEC2Instance.html)
+  https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-commandline-fleet.html
 
-  * [0] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch **(hard mode)**
-    * [cloud-init](https://aws.amazon.com/premiumsupport/knowledge-center/execute-user-data-ec2/)
-    * [user data](https://docs.docker.com/config/containers/logging/awslogs/)
+  * [x] All servers should use a User Data script upon startup to install and configure an agent to send custom CloudWatch events for CPU monitoring
 
+    * https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/US_AlarmAtThresholdEC2.html
+
+    * configure cloud watch agent: make sure that there's an IAM role attached to EC2 that will allow cloudwatch, ex: CloudWatchAgentServerRole
+    * do the following in EC2 instance command line:
+```
+wget https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+sudo rpm -U ./amazon-cloudwatch-agent.rpm
+sudo aws configure --profile AmazonCloudWatchAgent
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
+```
+![cpu monitoring](cpu_monitoring.png)
+
+![cpu util graph](cpu_utilization_graph.png)
+
+
+  * [x] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch. 
+    * Make sure that awslogs and docker services are installed
+    * [user data](https://docs.docker.com/config/containers/logging/awslogs/):
+```
+Content-Type: multipart/mixed; boundary="//"
+MIME-Version: 1.0
+
+--//
+Content-Type: text/cloud-config; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="cloud-config.txt"
+
+#cloud-config
+cloud_final_modules:
+- [scripts-user, always]
+
+--//
+Content-Type: text/x-shellscript; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="userdata.txt"
+
+#!/bin/bash
+sudo service awslogs start
+sudo service docker start
+sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awslogs-region=us-west-2 --log-opt awslogs-group=myNewDockerLogGroup --log-opt awslogs-create-group=true --name mywikipad mprasil/dokuwiki:latest
+--//
+```
 ## Applications - Jen and Alf
 
   * [x] Dokuwiki in a Docker container for the developers to use - **Alf**
