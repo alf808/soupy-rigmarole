@@ -157,12 +157,6 @@ sudo systemctl enable awslogsd.service
 ![ec2 sg](ec2_legal_sg.png)
 
 
-
-
-  * S3 bucket for cloudtrail (with lifecycle) - give S3 ARN to James
-    * lifecycle rule
-    ![lifecycle cloudtrail](lifecycle_cloudtrail.png)
-
   * Server patching with Systems Manager (SSM)
     * created a role with policy **AmazonSSMManagedInstanceCore** and attached to EC2 instances to be patched and then set up patch manager in Systems Manager
 
@@ -232,6 +226,11 @@ sudo service docker start
 sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awslogs-region=us-west-2 --log-opt awslogs-group=myNewDockerLogGroup --log-opt awslogs-create-group=true --name mywikipad mprasil/dokuwiki:latest
 --//
 ```
+
+## LOGS
+  * S3 bucket for cloudtrail (with lifecycle) - give S3 ARN to James
+    * lifecycle rule
+    ![lifecycle cloudtrail](lifecycle_cloudtrail.png)
 
 ## Monitoring - Lambda and Cloudwatch, low priority
 
