@@ -2,15 +2,15 @@
 
 Systems Operations Control team will analyze all requirements and create the appropriate configurations and document the outcome of their analysis and deployment.
 
-[x] Documentation of configurations and defined policies
+- [x] Documentation of configurations and defined policies
 
-[x]  [Network and Systems architecture diagrams](acme-developers.pdf)
+- [x] [Network and Systems architecture diagrams](acme-developers.pdf)
 
-[x] setups should be verified to be working properly to be considered complete
+- [x] setups should be verified to be working properly to be considered complete
 
-[x] If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
+- [x] If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
 
-* COSTS
+  **COSTS**
   * EIP for nat (4 hours 19 cents)
   * S3 for cloudtrail
   * GuardDuty - 30-day free trial
@@ -21,15 +21,13 @@ Systems Operations Control team will analyze all requirements and create the app
 ## **Organizations - (OU)**
 The company will need to manage multiple organizations units to separate divisions within the business.
 
-  * Ensure that all organizations cannot disable CloudTrail logging in any organization via Service Control Policy
-  * Development
-  * [x] The development environment should only have access to development related resources
-  * [x] Prevent users within the Development environment from disabling Config or changing any of it's rules - **only SysOps have config access**
-
+- [ ] Ensure that all organizations cannot disable CloudTrail logging in any organization via Service Control Policy
+- [x] The development environment should only have access to development related resources
+- [x] Prevent users within the Development environment from disabling Config or changing any of it's rules - **only SysOps have config access**
 
 ## **IAM**
-* [x] All organizations should have best practices applied for password security and console access policies - **Auditors do not have programmatic access**
-* [x] Appropriate groups should be created with multiple users created for various groups
+- [x] All organizations should have best practices applied for password security and console access policies - **Auditors do not have programmatic access**
+- [x] Appropriate groups should be created with multiple users created for various groups
 
 MFA to be done soon
 ![security status](security_status.png)
@@ -39,7 +37,7 @@ Only SysOps, NetworkAdmins, and DBAdmins have programmatic access. Auditors only
 
 ## **Networks - (VPC)**
 
-[x] All environments should be configured to support multi availability zone distribution.
+- [x] All environments should be configured to support multi availability zone distribution.
 
   **Developers Network**
 
@@ -73,7 +71,7 @@ Host team1-acme-dev-private
 ![bastion worked](bastion_worked.png)
 
 ## **Documents - S3**
-Developers need a secure location to store file uploads from various applications, these files should support versioning. Block public access
+- [x] Developers need a secure location to store file uploads from various applications, these files should support versioning. Block public access
 
 ![dev bucket](dev_bucket_versioning.png)
 
@@ -83,7 +81,7 @@ with replication rule to create redundancy
 
 ## **Websites and Apps**
 
-* dokuwiki for developer internal use
+- [x] dokuwiki for developer internal use
 
 ```
 sudo yum install docker
@@ -103,17 +101,17 @@ elinks http://localhost/install.php
 accessible only from within internal network
   ![dokuwiki for dev](dokuwiki_from_publicSG_to_privateEC2.png)
 
-  * MySQL for internal use(mariadb) only within internal network
+- [x] MySQL for internal use(mariadb) only within internal network
 
-  ![mysql for dev](mysql_for_internal_use.png)
+![mysql for dev](mysql_for_internal_use.png)
 
-  * Docker logging solution: cloudwatch for docker
+- [x] Docker logging solution: cloudwatch for docker
 ```  
 sudo yum install -y awslogs
 sudo systemctl start awslogsd
 sudo systemctl enable awslogsd.service
 ```
-    * created a cloudwatch agent
+  * created a cloudwatch agent
     with the following policies:
 ```
 {
@@ -135,7 +133,7 @@ sudo systemctl enable awslogsd.service
 
 ### **Legal wordpress**
 
-* RDS MySql for Wordpress Legal
+- [x] RDS MySql for Wordpress Legal
 ![wordpress RDS](wp_rds_mysql_legal.png)
 
 * Wordpress Legal
@@ -146,8 +144,9 @@ sudo systemctl enable awslogsd.service
 ![ec2 sg](ec2_legal_sg.png)
 
 ## **Servers - EC2**
-[x] Servers should be accessible via bastion over SSH but not publicly accessible via SSH w/ the exception of bastion(s)
+- [x] Servers should be accessible via bastion over SSH but not publicly accessible via SSH w/ the exception of bastion(s)
 
+- [x] Patching with SSM
 **Server patching with Systems Manager (SSM)**
   * created a role with policy **AmazonSSMManagedInstanceCore** and attached to EC2 instances to be patched and then set up patch manager in Systems Manager
 
@@ -161,7 +160,7 @@ sudo systemctl enable awslogsd.service
 ![patch history](patch_history.png)
 
 **Config**
-* standard configuration in Config
+- [x] standard configuration in Config
   * public
 ![public ec2](config_ec2_public_snapshot_history.png)
   * private
@@ -170,7 +169,8 @@ sudo systemctl enable awslogsd.service
 
 **EC2 monitoring**
 
-  * https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/US_AlarmAtThresholdEC2.html
+- [x] Servers should be able to be patched any time with Systems Manager
+  * [resource](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/US_AlarmAtThresholdEC2.html)
 
   * configure cloud watch agent: make sure that there's an IAM role attached to EC2 that will allow cloudwatch, ex: CloudWatchAgentServerRole
   * do the following in EC2 instance command line:
@@ -187,7 +187,7 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-c
 ![cpu util graph](cpu_utilization_graph.png)
 
 **User Data**
-  * [x] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-commandline-fleet.html
+- [x] All servers that host applications should use a User Data script upon startup to send Docker logs to CloudWatch. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-commandline-fleet.html
 
     * Make sure that awslogs and docker services are installed
     * [user data](https://docs.docker.com/config/containers/logging/awslogs/):
@@ -219,13 +219,13 @@ sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awsl
 ```
 
 ## **Logs**
-* S3 bucket for cloudtrail (with lifecycle) - give S3 ARN to James
+- [x] S3 bucket for cloudtrail (with lifecycle) - give S3 ARN to James
 
 ![lifecycle cloudtrail](lifecycle_cloudtrail.png)
 
 ## **Monitoring - Cloudwatch, SNS, Lambda**
 
-[x] Operations should get alerts whenever an EC2 changes goes into a stopped state and when the EC2 is remediated - L & C
+- [x] Operations should get alerts whenever an EC2 changes goes into a stopped state and when the EC2 is remediated
 
 ![start EC2](startec2_lambda.png)
 
@@ -251,36 +251,36 @@ def lambda_handler(event, context):
 **Cloudwatch rule**
 ![EC2 stop rule](cloudwatch_ec2_stop_rule.png)
 
-[x] Operations should get alerts whenever and EC2 is terminated - L & C
+- [x] Operations should get alerts whenever and EC2 is terminated
 
 ![EC2 terminated rule](cloudwatch_ec2_terminate_rule.png)
 
-[0] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated
+- [0] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated
 
 **Cloudwatch Dashboard**
 
-dashboard to monitor key system metrics and network traffic
+- [x] dashboard to monitor key system metrics and network traffic
 ![dashboard cloudwatch](dashboard_keymetrics.png)
 
 **Inspector**
-
+- [x] Enable GuardDuty
 ![inspector](inspector_enabled.png)
 
 **GuardDuty**
-
+- [x] Enable Inspector
 ![guardduty enabled](guardduty_enabled.png)
 
 ## **Alerts - SNS**
 **Rules for log tampering**
-
+- [x] Send an alert whenever Cloudtrail controls are tampered with
+- [x] Send an alert whenever CloudWatch controls are tampered with
 ![rules](cloud_alerts.png)
 
 **email alerts**
 ![emails](cloud_tamper_email.png)
 
 **monitoring the root**
-
-Send an alert whenever someone logs in with the root user account for any organization
+- [x] Send an alert whenever someone logs in with the root user account for any organization
 
 ![cloudwatch alert root activity](cloudwatch_root_alarm.png)
 
