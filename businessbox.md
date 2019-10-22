@@ -132,7 +132,7 @@ sudo systemctl enable awslogsd.service
 ![docker cloudwatch](docker_cloudwatch.png)
 
 ### **Legal wordpress**
-
+- [x] The legal department needs a Wordpress installation to manage corporate intranet assets
 - [x] RDS MySql for Wordpress Legal
 ![wordpress RDS](wp_rds_mysql_legal.png)
 
@@ -169,7 +169,7 @@ sudo systemctl enable awslogsd.service
 
 **EC2 monitoring**
 
-- [x] Servers should be able to be patched any time with Systems Manager
+- [x] startup to install and configure an agent to send custom CloudWatch events for CPU monitoring
   * [resource](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/US_AlarmAtThresholdEC2.html)
 
   * configure cloud watch agent: make sure that there's an IAM role attached to EC2 that will allow cloudwatch, ex: CloudWatchAgentServerRole
