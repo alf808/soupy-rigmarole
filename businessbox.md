@@ -1,33 +1,31 @@
 # Team 1, Acme Corp., Developers Division
 
-It is assumed that the Systems Operations Control team will analyze all requirements and create the appropriate configurations and document the outcome of their analysis and deployment.
+Systems Operations Control team will analyze all requirements and create the appropriate configurations and document the outcome of their analysis and deployment.
 
-[]  * Documentation of configurations and defined policies
+[x] Documentation of configurations and defined policies
 
-[]  * Systems architecture diagrams
+[x]  Network and Systems architecture diagrams
+![diagram](acme-developers.pdf)
 
-[]  * Network architecture diagrams
+[x] setups should be verified to be working properly to be considered complete
 
-[] All setups should be verified to be working properly to be considered complete.
+[x] If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
 
-[] If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
-
-  * COSTS
-    * EIP for nat (4 hours 19 cents)
-    * S3 for cloudtrail
-    * GuardDuty - 30-day free trial
-    * Inspector - 30-day free trial
-    * S3 with replication
-    * Config 
+* COSTS
+  * EIP for nat (4 hours 19 cents)
+  * S3 for cloudtrail
+  * GuardDuty - 30-day free trial
+  * Inspector - 30-day free trial
+  * S3 with replication
+  * Config 
 
 ## **Organizations - (OU)**
 The company will need to manage multiple organizations units to separate divisions within the business.
 
   * Ensure that all organizations cannot disable CloudTrail logging in any organization via Service Control Policy
-
   * Development
-    * [x] The development environment should only have access to development related resources
-    * [x] Prevent users within the Development environment from disabling Config or changing any of it's rules - **only SysOps have config access (alf)**
+  * [x] The development environment should only have access to development related resources
+  * [x] Prevent users within the Development environment from disabling Config or changing any of it's rules - **only SysOps have config access**
 
 
 ## **IAM**
