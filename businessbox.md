@@ -72,7 +72,7 @@ Host team1-acme-dev-private
 
 ## **Documents - S3**
 - [x] Developers need a secure location to store file uploads from various applications, these files should support versioning. Block public access
-
+- [x] Documents should be ensured to be stored in multiple regions for reliable backups and guaranteed accessibility
 ![dev bucket](dev_bucket_versioning.png)
 
 with replication rule to create redundancy
@@ -88,7 +88,9 @@ sudo yum install docker
 sudo systemctl start docker
 sudo docker images
 ```
-* awslogs service installation
+
+**awslogs service installation**
+
 ```
 sudo yum install awslogs
 sudo service awslogs start
@@ -97,7 +99,7 @@ sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awsl
 
 elinks http://localhost/install.php
   ```
-~~account: nemo, pwd:~~
+~~account: nemo~~
 accessible only from within internal network
   ![dokuwiki for dev](dokuwiki_from_publicSG_to_privateEC2.png)
 
@@ -133,6 +135,7 @@ sudo systemctl enable awslogsd.service
 
 ### **Legal wordpress**
 - [x] The legal department needs a Wordpress installation to manage corporate intranet assets
+
 - [x] RDS MySql for Wordpress Legal
 ![wordpress RDS](wp_rds_mysql_legal.png)
 
@@ -166,7 +169,6 @@ sudo systemctl enable awslogsd.service
   * private
 ![private ec2](config_snapshot_1_38.png)
 
-
 **EC2 monitoring**
 
 - [x] startup to install and configure an agent to send custom CloudWatch events for CPU monitoring
@@ -182,8 +184,9 @@ sudo rpm -U ./amazon-cloudwatch-agent.rpm
 sudo aws configure --profile AmazonCloudWatchAgent
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s
 ```
+**CPU monitoring**
 ![cpu monitoring](cpu_monitoring.png)
-
+**CPU utilization alert**
 ![cpu util graph](cpu_utilization_graph.png)
 
 **User Data**
@@ -219,7 +222,7 @@ sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awsl
 ```
 
 ## **Logs**
-- [x] S3 bucket for cloudtrail (with lifecycle) - give S3 ARN to James
+- [x] S3 bucket for cloudtrail (with lifecycle) - 30 days standard access, delete after 90 days
 
 ![lifecycle cloudtrail](lifecycle_cloudtrail.png)
 
@@ -255,7 +258,7 @@ def lambda_handler(event, context):
 
 ![EC2 terminated rule](cloudwatch_ec2_terminate_rule.png)
 
-- [0] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated
+- [ ] Operations should get alerts whenever an EC2 is started and doesn't comply to standard configuration, the server should also be terminated
 
 **Cloudwatch Dashboard**
 
