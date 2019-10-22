@@ -2,13 +2,13 @@
 ## Deliverables
 - [x] Documentation of configurations and defined policies 
 
-- [ ] Systems architecture diagrams
+- [x] Systems architecture diagrams
 
-- [ ] Network architecture diagrams
+- [x] Network architecture diagrams
 
 - [x] All setups should be verified to be working properly to be considered complete.
 
-- [ ] If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
+- [x] If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
 
 ## OU
 - [ ] Manage multiple organizations units to separate divisions within the business
@@ -98,7 +98,7 @@
 **Inspector**
 - [x] Enable [Inspector](https://aws.amazon.com/inspector/) and configure to run nightly scans of all of your applications and networks
 
-## SNS
+## Alerts - SNS
 - [x] Send an alert whenever Cloudtrail controls are tampered with
 
 - [x] Send an alert whenever CloudWatch controls are tampered with
