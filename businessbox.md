@@ -10,13 +10,17 @@ Systems Operations Control team will analyze all requirements and create the app
 
 - [x] If you are going to use any services that incur a cost you must report what that service will cost daily/monthly.
 
+![cost for the month](summary_costs.png)
   **COSTS**
-  * EIP for nat (4 hours 19 cents)
+  * EC2, EIP for nat
   * S3 for cloudtrail
   * GuardDuty - 30-day free trial
   * Inspector - 30-day free trial
   * S3 with replication
-  * Config 
+  * Config
+  * Cloudtrail
+  
+[Detailed View of Costs](aws_dev_costs.pdf)
 
 ## **Organizations - (OU)**
 The company will need to manage multiple organizations units to separate divisions within the business.
