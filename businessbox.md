@@ -4,8 +4,7 @@ Systems Operations Control team will analyze all requirements and create the app
 
 [x] Documentation of configurations and defined policies
 
-[x]  Network and Systems architecture diagrams
-![diagram](acme-developers.pdf)
+[x]  [Network and Systems architecture diagrams](acme-developers.pdf)
 
 [x] setups should be verified to be working properly to be considered complete
 
@@ -42,7 +41,7 @@ Only SysOps, NetworkAdmins, and DBAdmins have programmatic access. Auditors only
 
 [x] All environments should be configured to support multi availability zone distribution.
 
-  * [x] Developers - **todo: chart**
+  **Developers Network**
 
   * public subnet -- http(s) outbound, SSH inbound with EC2 for bastion host with internet gateway and temporarily a NAT gateway
 
