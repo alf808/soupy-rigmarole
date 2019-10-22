@@ -47,5 +47,7 @@ Cloudwatch events for CPU monitoring and EC2 instances monitoring
 ## Cloudwatch dashboard
 
 ## GuardDuty
+* real-time monitoring of instances
 
 ## Inspector
+* monitor logs
