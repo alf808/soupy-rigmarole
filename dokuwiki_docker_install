@@ -1,0 +1,98 @@
+sudo yum install docker.x86_64
+sudo systemctl start docker
+sudo docker images (list docker images)
+sudo docker run hello-world
+sudo docker run -d -p 80:80 --name mywikipad mprasil/dokuwiki
+elinks http://localhost/install.php
+account: nemo, pwd:
+
+sudo service awslogs start
+sudo service docker start
+sudo docker run --restart always -d -p 80:80 --log-driver=awslogs --log-opt awslogs-region=us-west-2 --log-opt awslogs-group=myNewDockerLogGroup --log-opt awslogs-create-group=true --name mywikipad mprasil/dokuwiki:latest
+
+python3 -m http.server
+exit
+tmux new -s alfsession
+exit
+emacs
+sudo yum install elinks
+elinks
+history
+history -a
+cat .bashrc 
+ls -al
+cat .bash_history 
+ exit
+ls
+ls -al
+docker run -d -p 8080:8080 --name mywikipad mprasil/dokuwiki
+sudo docker run -d -p 80:80 --name mywikipad mprasil/dokuwiki
+ls
+ps -a | more
+history -a
+ls
+history -a
+exi
+exit
+history -a
+exit
+tmux ls
+history -a
+exit
+ cat .bash_history 
+tmux ls
+history -a
+sudo yum update
+docker
+sudo docker run hello-world
+sudo yum install docker-engine
+sudo yum install docker
+sudo usermod -aG docker ec2-user
+docker ps
+systemctl
+sudo systemctl status docker
+sudo systemctl start docker
+docker run hello-world
+sudo docker run hello-world
+sudo docker images
+docker run -it ubuntu bash
+sudo docker run -it ubuntu bash
+docker images hello-world
+sudo docker images hello-world
+lynx
+links
+ifconfig
+which python3
+sudo yum python3
+sudo yum search python*
+sudo yum search python3
+sudo yum search python36
+sudo yum info python3.x86_64 64
+sudo yum install python3.x86_64
+python
+python3
+python3 -m http.server
+curl
+lynx
+emacs
+elinks
+sudo yum install emacs
+emacs
+tmux
+sudo yum install tmux
+tmux
+tmux new -s alfsession
+history -a
+cat .bash_history 
+ifconfig
+sudo docker images
+sudo docker stop mywikipad
+sudo docker images
+history -a
+cat .bash_history 
+sudo docker start mywikipad
+elinks 172.31.1.74
+history -a
+sudo docker stop mywikipad
+history -a
+exec env TERM='dumb' INSIDE_EMACS='26.1,tramp:2.3.3.26.1' ENV='' HISTFILE=~/.tramp_history PROMPT_COMMAND='' PS1=\#\$\  PS2='' PS3='' /bin/sh 

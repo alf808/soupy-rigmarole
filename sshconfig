@@ -1,0 +1,36 @@
+Host team1-acme-developers
+     Hostname xx.xx.xx.xx
+     User ec2-user
+     Port 22
+     ForwardAgent yes
+     IdentityFile ~/.ssh/team1-acme-developers.pem
+
+Host private-dev
+     User ec2-user
+     ProxyCommand ssh team1-acme-developers nc xx.xx.xx.xx 22
+     ForwardAgent yes
+     IdentityFile ~/.ssh/team1-acme-developers.pem
+
+Host team1-acme-marketing
+     Hostname xx.xx.xx.xx
+     User ec2-user
+     Port 22
+     ForwardAgent yes
+     IdentityFile ~/.ssh/team1-acme-marketing.pem
+
+
+Host team1-acme-finance
+     Hostname xx.xx.xx.xx
+     User ec2-user
+     Port 22
+     ForwardAgent yes
+     IdentityFile ~/.ssh/team1-acme-finance.pem
+
+
+Host team1-acme-rd
+     Hostname xx.xx.xx.xx
+     User ec2-user
+     Port 22
+     ForwardAgent yes
+     IdentityFile ~/.ssh/team1-acme-rd.pem
+
